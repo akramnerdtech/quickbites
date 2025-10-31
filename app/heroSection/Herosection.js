@@ -182,6 +182,7 @@ export default function Herosection() {
   const [onlineFoodTitle, setOnlineFoodTitle]= useState("")
   const [onlineData, setOnlineData]= useState([])
 
+
   const sliderRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -211,6 +212,9 @@ export default function Herosection() {
         imageId: info.imageId,
         text: info.accessibility?.altText || "",
       }));
+
+
+    
 
       // const onlinRestaurantList = result?.data.cards?.[4]?.card?.card?.gridElements?.restaurants[0]?.info?.name
 

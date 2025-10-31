@@ -5,7 +5,7 @@ import "./globals.css";
 import Footer from "./footer/Footer";
 import Header from "./header/Header";
 import { CartProvider } from "./context/CartContext";
-import { AuthProvider } from "./context/AuthContext"; // Import the new AuthProvider
+import { AuthProvider } from "./context/AuthContext"; 
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

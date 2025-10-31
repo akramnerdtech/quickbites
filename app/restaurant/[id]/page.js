@@ -4,7 +4,7 @@
 import { useCart } from "@/app/context/CartContext";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { FaStar, FaRegStar, FaStarHalfAlt, FaPlus } from "react-icons/fa";
+import { FaStar, FaRegStar, FaStarHalfAlt, FaPlus, FaRegTimesCircle } from "react-icons/fa";
 
 // Reusable Star Rating Component
 function StarRating({ rating }) {
@@ -180,6 +180,8 @@ const RestaurantDetailPage = () => {
         const result = await response.json();
         const relatedItems =
           result?.data?.cards?.[0]?.card?.card?.restaurants || [];
+
+      
 
         const uniqueRestaurants = Array.from(
           new Map(

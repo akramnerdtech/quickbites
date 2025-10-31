@@ -9,7 +9,7 @@ const dummyOffers = [
 id: "offer1",
     icon: "Percent",
     title: "Flat 50% OFF",
-    description: "Get a straight 50% discount on all orders above ₹149.",
+    description: "Get a straight 50% discount on all orders above ₹1149.",
     code: "QUICK50",
     terms: "Valid for first-time users. Max discount ₹100.",
   },
@@ -63,6 +63,7 @@ const OfferCard = ({ offer }) => {
     navigator.clipboard.writeText(offer.code);
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 2000); 
+   
   };
 
   return (
@@ -84,11 +85,14 @@ const OfferCard = ({ offer }) => {
           </span>
           <button 
             onClick={handleCopy}
-            className="text-sm font-semibold text-white bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded-full transition-colors duration-300"
+            className={`text-sm font-semibold text-white cursor-pointer  px-4 py-2 rounded-full transition-colors duration-300 ${isCopied ? "bg-green-500" : "bg-orange-600 hover:bg-orange-700"}`}
           >
-            {isCopied ? "Copied!" : "Copy"}
+            {isCopied ? "Copied!" : "Copy" }
+          
           </button>
         </div>
+      
+
         <p className="text-xs text-gray-500 mt-2">{offer.terms}</p>
       </div>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, ChevronDown, Phone, Mail, ShoppingBag, CreditCard, User, List } from "lucide-react";
+import { Search, ChevronDown, Phone, Mail, ShoppingBag, CreditCard, User, List, IndianRupee } from "lucide-react";
 
 
 
@@ -61,6 +61,7 @@ const quickLinks = [
     { title: "Manage Payments", icon: CreditCard, href: "/payments" },
     { title: "Update Profile", icon: User, href: "/profile" },
     { title: "My Recent Orders", icon: List, href: "/order-history" },
+    { title: "Payments Failed", icon: IndianRupee, href: "/payments-failed"}
 ];
 
 const HelpPage = () => {

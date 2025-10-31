@@ -18,6 +18,7 @@ export default function CartPage() {
   const [promoCode, setPromoCode] = useState("");
   const [discount, setDiscount] = useState(0);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
+  
 
   // Corrected function to get price from the cart item
   const getItemPrice = (item) => {
@@ -39,15 +40,31 @@ export default function CartPage() {
   const taxes = subtotal * 0.05; 
   const finalTotal = subtotal + taxes + deliveryFee - discount;
 
-  const handleApplyPromoCode = () => {
-    if (promoCode.toLowerCase() === "foodie30") {
-      setDiscount(subtotal * 0.3); 
-      alert("Promo code applied!");
+  // const handleApplyPromoCode = () => {
+  //   if (promoCode.toLowerCase() === "foodie30") {
+  //     setDiscount(subtotal * 0.3); 
+  //     alert("Promo code applied!");
+  //   } else {
+  //     setDiscount(0);
+  //     alert("Invalid promo code.");
+  //   }
+  // };
+
+  
+
+  const handleApplyPromoCode = ()=>{
+    if (promoCode=== "QUICK50" && finalTotal >= 1149){
+      setDiscount(subtotal * 0.5)
+      alert("Promo code is applied")
+    } else if (finalTotal< 1149){
+        alert("Promo code is only valid for above 1149 order")
     } else {
-      setDiscount(0);
-      alert("Invalid promo code.");
+      setDiscount(0)
+      alert("Invalid promo code ")
     }
-  };
+  }
+
+ 
 
   const recommendedItems = [
     { id: 'rec-1', name: 'Burger', image: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_112,h_112,c_fill/Autosuggest/Top%20200%20queries/Burger.png", price: 150 },
@@ -214,7 +231,7 @@ export default function CartPage() {
           <div className="mt-16">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">You might also like...</h2>
             <div className="flex flex-nowrap overflow-x-auto gap-6 pb-4 -mx-6 md:mx-0 px-6 md:px-0 scrollbar-hide">
-              {recommendedItems.map(item => (
+              {/* {recommendedItems.map(item => (
                 <div 
                   key={item.id} 
                   className="flex-shrink-0 w-48 bg-white rounded-xl shadow-md overflow-hidden cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-xl"
@@ -232,7 +249,7 @@ export default function CartPage() {
                     </button>
                   </div>
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
         )}
