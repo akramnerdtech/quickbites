@@ -1,17 +1,32 @@
-
 "use client";
 
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-const CartContext = createContext();
+const CART_STORAGE_KEY = "quickbites-cart";
+const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
+  useEffect(() => {
+    try {
+      const storedCart = window.localStorage.getItem(CART_STORAGE_KEY);
+      if (storedCart) {
+        setCartItems(JSON.parse(storedCart));
+      }
+    } catch (error) {
+      console.error("Failed to read cart state:", error);
+      window.localStorage.removeItem(CART_STORAGE_KEY);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+  }, [cartItems]);
+
   const addToCart = (item) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((cartItem) => cartItem.id === item.id);
-      console.log("item Id is:", item.id)
 
       if (existingItem) {
         return prevItems.map((cartItem) =>
@@ -19,9 +34,9 @@ export const CartProvider = ({ children }) => {
             ? { ...cartItem, quantity: cartItem.quantity + 1 }
             : cartItem
         );
-      } else {
-        return [...prevItems, { ...item, quantity: 1 }];
       }
+
+      return [...prevItems, { ...item, quantity: 1 }];
     });
   };
 
@@ -39,11 +54,11 @@ export const CartProvider = ({ children }) => {
 
   const decreaseQuantity = (itemId) => {
     setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === itemId && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
+      prevItems
+        .map((item) =>
+          item.id === itemId ? { ...item, quantity: item.quantity - 1 } : item
+        )
+        .filter((item) => item.quantity > 0)
     );
   };
 
@@ -51,25 +66,31 @@ export const CartProvider = ({ children }) => {
     setCartItems([]);
   };
 
-  const getCartItemCount = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
-  };
+  const getCartItemCount = () =>
+    cartItems.reduce((total, item) => total + item.quantity, 0);
 
-  return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        addToCart,
-        removeFromCart,
-        clearCart,
-        increaseQuantity,
-        decreaseQuantity,
-        getCartItemCount,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
+  const value = useMemo(
+    () => ({
+      cartItems,
+      addToCart,
+      removeFromCart,
+      clearCart,
+      increaseQuantity,
+      decreaseQuantity,
+      getCartItemCount,
+    }),
+    [cartItems]
   );
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
-export const useCart = () => useContext(CartContext);
+export const useCart = () => {
+  const context = useContext(CartContext);
+
+  if (!context) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+
+  return context;
+};

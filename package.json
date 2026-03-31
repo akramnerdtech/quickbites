@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "start:local": "env-cmd -f .env.local react-scripts start"
+    "start:local": "env-cmd -f .env.local next dev",
+    "start:dev": "env-cmd -f .env.development next dev"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^4.0.2",
@@ -19,11 +20,11 @@
     "react-icons": "^5.5.0",
     "react-parallax": "^3.5.2",
     "react-parallax-tilt": "^1.7.308",
-    "react-scripts": "^5.0.1",
     "stripe": "^18.5.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "baseline-browser-mapping": "^2.9.19",
     "env-cmd": "^11.0.0",
     "tailwindcss": "^4"
   }

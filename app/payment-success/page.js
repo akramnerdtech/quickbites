@@ -1,38 +1,56 @@
-
-"use client";
-
 import Link from "next/link";
-import { FaCheckCircle, FaArrowLeft } from "react-icons/fa";
+import { CheckCircle2 } from "lucide-react";
 
-export default function PaymentSuccessPage() {
+export default async function PaymentSuccessPage({ searchParams }) {
+  const resolvedSearchParams = await searchParams;
+  const orderId = resolvedSearchParams?.orderId;
+  const method = resolvedSearchParams?.method;
+
   return (
-    <div className="bg-gray-100 min-h-screen p-6 md:p-10 lg:p-16 pt-20 font-sans flex items-center justify-center">
-      <div className="bg-white rounded-xl shadow-lg p-8 md:p-12 w-full max-w-xl text-center border border-gray-200">
-        <FaCheckCircle className="text-green-500 text-6xl md:text-8xl mx-auto mb-6 animate-pulse" />
-        
-        <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
-          Payment Successful!
-        </h1>
-        
-        <p className="text-gray-600 text-base md:text-lg mb-8 max-w-md mx-auto">
-          Thank you for your order. Your delicious food is now being prepared and is on its way!
-        </p>
+    <main className="min-h-screen px-4 pb-16 pt-28 sm:px-6 lg:px-8">
+      <section className="mx-auto flex max-w-3xl items-center justify-center">
+        <div className="w-full rounded-[40px] border border-slate-200/80 bg-white p-8 text-center shadow-[0_28px_80px_rgba(15,23,42,0.08)] sm:p-10">
+          <CheckCircle2 className="mx-auto text-[#1ba672]" size={72} />
 
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Link
-            href="/"
-            className="w-full sm:w-auto px-6 py-3 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition transform hover:scale-105 shadow-lg"
-          >
-            Continue Shopping
-          </Link>
-          <Link
-            href="/my-orders"
-            className="w-full sm:w-auto px-6 py-3 text-orange-600 rounded-lg font-semibold border border-orange-200 hover:bg-orange-50 transition transform hover:scale-105"
-          >
-            Track My Order
-          </Link>
+          <h1 className="mt-6 text-4xl font-black tracking-tight text-slate-900">
+            Order confirmed
+          </h1>
+          <p className="mt-3 text-base leading-7 text-slate-500">
+            Your order is now in the system and can be tracked live from the orders page.
+          </p>
+
+          {(orderId || method) && (
+            <div className="mt-6 rounded-[28px] bg-[#fff1f2] p-5 text-sm text-slate-600">
+              {orderId && (
+                <p>
+                  <span className="font-black text-slate-900">Order ID:</span> {orderId}
+                </p>
+              )}
+              {method && (
+                <p className="mt-2">
+                  <span className="font-black text-slate-900">Payment method:</span>{" "}
+                  {method === "cod" ? "Cash on Delivery" : "Card"}
+                </p>
+              )}
+            </div>
+          )}
+
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
+            <Link
+              href="/"
+              className="rounded-full bg-[#e23744] px-6 py-3 text-sm font-black text-white transition hover:bg-[#c91d2a]"
+            >
+              Continue shopping
+            </Link>
+            <Link
+              href="/my-orders"
+              className="rounded-full border border-[#e23744]/25 px-6 py-3 text-sm font-black text-[#e23744] transition hover:bg-[#fff1f2]"
+            >
+              Track my order
+            </Link>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

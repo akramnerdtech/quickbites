@@ -1,19 +1,19 @@
 // src/app/layout.js
 
-import { Geist, Geist_Mono } from "next/font/google";
+import { Manrope, Sora } from "next/font/google";
 import "./globals.css";
 import Footer from "./footer/Footer";
 import Header from "./header/Header";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext"; 
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
 });
 
@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${manrope.variable} ${sora.variable} antialiased`}
       >
         <AuthProvider> 
           <CartProvider>

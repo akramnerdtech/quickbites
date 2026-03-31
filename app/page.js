@@ -1,18 +1,10 @@
-"use client";
-
-import Link from "next/link";
-import Header from "./header/Header";
+import { Suspense } from "react";
 import Herosection from "./heroSection/Herosection";
-import HelpHeader from "./help-header/page";
 
 export default function Page() {
-return (
-<>
-{" "}
-
-<Header />
-<Herosection />
-
-</>
-);
+  return (
+    <Suspense fallback={<main className="min-h-screen pt-24" />}>
+      <Herosection />
+    </Suspense>
+  );
 }
